@@ -65,9 +65,11 @@ public class Controlador {
 	public void setParticipantes(ArrayList<Participante> participantes) {
 		this.participantes = participantes;
 	}
+	
 	public void startCronometro() {
 		timer.startTime();
 	}
+	
 	public void stopCronometro() {
 		timer.stopTime();
 	}
