@@ -20,11 +20,6 @@ public class NodoWBS<T> {
      * Tipo del nodo.
      */
     private String tipo;
-
-    /**
-     * Identificador del nodo.
-     */
-    private String identificador;
     
     /**
      * El nombre del nodo.
@@ -40,12 +35,7 @@ public class NodoWBS<T> {
     // -----------------------------------------------------------------
 
     /**
-     * Crea un nuevo nodo.<br>
-     * <b>post: </b> Los atributos identificador y tipo se inicializaron con los valores dados por parámetro.
-     * @param pTipo Tipo del nodo. pTipo != null && pTipo != "".
-     * @param pIdentificador Identificador del nodo. pIdentificador != null && pIdentificador != "".
-     * @param pNombre Nombre del nodo. pNombre != null && pNombre != "".
-     */
+     * Crea un nuevo nodo.
     public NodoWBS(T dato, String pTipo, String pNombre )
     {
         tipo = pTipo;
@@ -57,15 +47,6 @@ public class NodoWBS<T> {
     // -----------------------------------------------------------------
     // Métodos
     // -----------------------------------------------------------------
-
-    /**
-     * Retorna el identificador del nodo.
-     * @return Identificador del nodo.
-     */
-    public String darIdentificador( )
-    {
-        return identificador;
-    }
 
     /**
      * Retorna el tipo del nodo.
@@ -84,14 +65,6 @@ public class NodoWBS<T> {
         return nombre;
     }
     
-    /**
-     * Busca el nodo con el identificador dado.
-     * @param pIdentificador Identificador del nodo. pIdentificador != null && pIdentificador != "".
-     * @return NodoAlmacen con el identificador dado o null si no se encontró el nodo.
-     */
-    public NodoWBS buscarNodo( String pIdentificador ) {
-    	return null;
-    }
 
     /**
      * Crea un nodo a partir de la información del lector.
@@ -149,14 +122,6 @@ public class NodoWBS<T> {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
-	}
-
-	public String getIdentificador() {
-		return identificador;
-	}
-
-	public void setIdentificador(String identificador) {
-		this.identificador = identificador;
 	}
 
 	public String getNombre() {
