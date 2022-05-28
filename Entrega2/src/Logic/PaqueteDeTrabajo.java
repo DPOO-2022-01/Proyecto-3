@@ -10,7 +10,7 @@ public class PaqueteDeTrabajo  {
 		
 	//Constructor
 		
-		public void PaqueteDeTrabajo(String nombre, String descripcion) {
+		public PaqueteDeTrabajo(String nombre, String descripcion) {
 			this.nombre = nombre;
 			this.descripcion = descripcion;
 		}
