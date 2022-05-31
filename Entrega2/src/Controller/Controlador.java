@@ -30,9 +30,9 @@ public class Controlador {
 		
 	}
 	
-	public Proyecto crearProyecto(String nombreP, String descripcion, String fechaInicio, String fechaFinalizacion,Participante propietario) 
+	public Proyecto crearProyecto(String nombreP, String descripcion, String fechaInicio, String fechaFinalizacion,Participante propietario, PaqueteDeTrabajo paquete) 
 	{
-		proyecto = new Proyecto(nombreP, descripcion, fechaInicio, fechaFinalizacion, propietario);
+		proyecto = new Proyecto(nombreP, descripcion, fechaInicio, fechaFinalizacion, propietario, paquete);
 		proyecto.agregarParticipante(propietario);
 		
 		return proyecto;
@@ -46,10 +46,9 @@ public class Controlador {
 		
 	}
 	
-	public PaqueteDeTrabajo crearPaqueteInicial(String nombre, String descripcion, Proyecto proyecto)
+	public PaqueteDeTrabajo crearPaqueteInicial(String nombre, String descripcion)
 	{
 		PaqueteDeTrabajo paquete = new PaqueteDeTrabajo(nombre, descripcion);
-		proyecto.agregarPaquete(paquete);
 		return paquete;
 	}
 	

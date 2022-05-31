@@ -14,11 +14,11 @@ public class Proyecto {
     private ArrayList<Participante> participantes;
     private ArrayList<TipoActividad> tipoActividades;
     private ArrayList<Actividad> actividades;
-    private ArrayList<PaqueteDeTrabajo> paquetes;
+    private PaqueteDeTrabajo paquete;
     private ArrayList<TipoTarea> tipoTareas;
 
     //Constructor
-    public Proyecto(String nombre, String descripcion, String fechaInicio, String fechaFinalizacion, Participante propietario) {
+    public Proyecto(String nombre, String descripcion, String fechaInicio, String fechaFinalizacion, Participante propietario, PaqueteDeTrabajo paquete) {
         super();
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -27,10 +27,10 @@ public class Proyecto {
         this.propietario = propietario;
         this.participantes = new ArrayList<>();
         this.actividades = new ArrayList<>();
-        this.paquetes = new ArrayList<>();
+        this.paquete = paquete;
     }
 
-    public Proyecto(String nombre, String descripcion, String fechaInicio, String fechaFinalizacion) {
+    public Proyecto(String nombre, String descripcion, String fechaInicio, String fechaFinalizacion,  PaqueteDeTrabajo paquete) {
         super();
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -38,7 +38,7 @@ public class Proyecto {
         this.fechaFinalizacion = fechaFinalizacion;
         this.participantes = new ArrayList<>();
         this.actividades = new ArrayList<>();
-        this.paquetes = new ArrayList<>();
+        this.paquete = paquete;
     }
 
     public Proyecto(){
@@ -49,7 +49,6 @@ public class Proyecto {
         this.fechaFinalizacion = "";
         this.participantes = new ArrayList<>();
         this.actividades = new ArrayList<>();
-        this.paquetes = new ArrayList<>();
     }
 
     //Metodos
@@ -61,10 +60,6 @@ public class Proyecto {
     //Este metodo agrega a la lista de actividades, una actividad
     public void agregarActividad(Actividad actividad) {
         this.actividades.add(actividad);
-    }
-    
-    public void agregarPaquete(PaqueteDeTrabajo paquete) {
-        this.paquetes.add(paquete);
     }
 
 
@@ -143,13 +138,15 @@ public class Proyecto {
 		this.tipoTareas = tipoTareas;
 	}
 
-	public ArrayList<PaqueteDeTrabajo> getPaquetes() {
-		return this.paquetes;
+	public PaqueteDeTrabajo getPaquete() {
+		return paquete;
 	}
 
-	public void setPaquetes(ArrayList<PaqueteDeTrabajo> paquetes) {
-		this.paquetes = paquetes;
+	public void setPaquete(PaqueteDeTrabajo paquete) {
+		this.paquete = paquete;
 	}
+
+
     
 }
 

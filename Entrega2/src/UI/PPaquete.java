@@ -112,16 +112,19 @@ public class PPaquete extends JPanel implements ActionListener, Observer{
 		panelContenidoNueva.add(fieldDescripcion);
 		
 		Proyecto proyecto = padre.getControlador().getProyecto();
-		JLabel escogerPaquete = new JLabel("Escoge el paquete de trabajo que se le asignará a la tarea");
+		JLabel escogerPaquete = new JLabel("Escoge el paquete padre");
 		panelContenidoNueva.add(escogerPaquete);
 		grupoPaquete = new ButtonGroup();
 		tiposPaquetes = null;
-		for (PaqueteDeTrabajo tipoP: proyecto.getPaquetes()) {
-			tiposPaquetes = new JRadioButton(tipoP.getNombre());
-			grupoPaquete.add(tiposPaquetes);
-			panelContenidoNueva.add(tiposPaquetes);
-			buscarHijo(tipoP);
-		}
+		tiposPaquetes = new JRadioButton(proyecto.getPaquete().getNombre());
+		grupoPaquete.add(tiposPaquetes);
+		panelContenidoNueva.add(tiposPaquetes);
+			for (PaqueteDeTrabajo tipoP: proyecto.getPaquete().getPaquetes()) {
+				tiposPaquetes = new JRadioButton(tipoP.getNombre());
+				grupoPaquete.add(tiposPaquetes);
+				panelContenidoNueva.add(tiposPaquetes);
+				buscarHijo(tipoP);
+			}
 		
 		
 		bntPaquete.addActionListener(new ActionListener() {
@@ -134,24 +137,17 @@ public class PPaquete extends JPanel implements ActionListener, Observer{
 				PaqueteDeTrabajo paquete = null;
 				for (Enumeration<AbstractButton> botonesP = grupoPaquete.getElements(); botonesP.hasMoreElements();) {
 		            AbstractButton botonP = botonesP.nextElement();
-
 		            if (botonP.isSelected()) {
 		            	paqueteF = botonP.getText();
 		            }
 		        }
 				
-				for (PaqueteDeTrabajo paqueteS: proyecto.getPaquetes()) {
-					if (paquete == null) {
-						if (paqueteS.getNombre().equals(paqueteF))
-						{
-							paquete = paqueteS;
+				if (proyecto.getPaquete().getNombre().equals(paqueteF)) {
+							paquete = proyecto.getPaquete();
 						}
-						else if (paqueteS.getPaquetes().size()>0)	
-						{
-							paquete = buscarHijoRadioButton(paqueteS, paqueteF, paquete);	
+				else {
+					paquete = buscarHijoRadioButton(proyecto.getPaquete(), paqueteF);	
 						}
-					}
-				}
 				
 				if (paquete == null) {
 					JOptionPane.showMessageDialog(panelCrear, "Debes seleccionar un paquete padre", "Error!",
@@ -159,9 +155,8 @@ public class PPaquete extends JPanel implements ActionListener, Observer{
 				}
 				else {
 				padre.getControlador().crearPaquete(nombre, descripcion, paquete);
-				JOptionPane.showMessageDialog(panelCrear, "Se ha creado con éxito el paquete \n" + fieldNombre.getText(), "Atencion!",
+				JOptionPane.showMessageDialog(panelCrear, "Se ha creado con éxito el paquete, actualiza la ventana para ver \n" + fieldNombre.getText(), "Atencion!",
 							JOptionPane.INFORMATION_MESSAGE);
-				
 				}
 			}
 		});
@@ -206,19 +201,19 @@ public class PPaquete extends JPanel implements ActionListener, Observer{
 		}
 	}
 	
-	public PaqueteDeTrabajo buscarHijoRadioButton(PaqueteDeTrabajo tipoP, String paqueteS, PaqueteDeTrabajo paquete) {
+	public PaqueteDeTrabajo buscarHijoRadioButton(PaqueteDeTrabajo tipoP, String paqueteS) {
+		if (tipoP.getNombre().equals(paqueteS)) {
+			return tipoP;
+		}
 		if (tipoP.getPaquetes().size()>0) {
 			for (PaqueteDeTrabajo hijo: tipoP.getPaquetes()) {
-				if (hijo.getNombre().equals(paqueteS)) {
-					paquete = hijo;
-					break;
-				}
-				if(paquete == null) {
-					buscarHijoRadioButton(hijo, paqueteS, paquete);
+				PaqueteDeTrabajo paquete = buscarHijoRadioButton(hijo, paqueteS);
+				if (paquete != null) {
+					return paquete;
 				}
 			}
 		}
-		return paquete;
+		return null;
 	}
 
 	@Override
@@ -228,3 +223,4 @@ public class PPaquete extends JPanel implements ActionListener, Observer{
 	}
 	
 }
+

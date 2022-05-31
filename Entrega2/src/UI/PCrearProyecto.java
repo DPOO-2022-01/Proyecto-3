@@ -2,6 +2,7 @@ package UI;
 
 import javax.swing.*;
 
+import Logic.PaqueteDeTrabajo;
 import Logic.Participante;
 import Logic.Proyecto;
 
@@ -184,8 +185,8 @@ public class PCrearProyecto extends JPanel {
             	String[] tiposAct = tiposActividad.getText().split(",");
             	String[] tiposT = tiposTarea.getText().split(",");
             	Participante participante = new Participante(padre.getNombreParticipante(), padre.getEmailParticipante());
-            	Proyecto proyecto = padre.getControlador().crearProyecto(nombreProyecto.getText(), descripcionProyecto.getText(), fechaProyecto.getText(), "", participante);
-            	padre.getControlador().crearPaqueteInicial("Paquete de Trabajo Raiz", "Paquete de Trabajo Raiz del Proyecto", proyecto);
+            	PaqueteDeTrabajo paqueteInicial = padre.getControlador().crearPaqueteInicial("Paquete de Trabajo Raiz", "Paquete de Trabajo Raiz del Proyecto");
+            	Proyecto proyecto = padre.getControlador().crearProyecto(nombreProyecto.getText(), descripcionProyecto.getText(), fechaProyecto.getText(), "", participante, paqueteInicial);
             	padre.getControlador().getProyecto();
             	padre.getControlador().asignarTipoActividad(tiposAct);
             	padre.getControlador().asignarTipoTarea(tiposT);
