@@ -14,6 +14,8 @@ public class Proyecto {
     private ArrayList<Participante> participantes;
     private ArrayList<TipoActividad> tipoActividades;
     private ArrayList<Actividad> actividades;
+    private ArrayList<PaqueteDeTrabajo> paquetes;
+    private ArrayList<TipoTarea> tipoTareas;
 
     //Constructor
     public Proyecto(String nombre, String descripcion, String fechaInicio, String fechaFinalizacion, Participante propietario) {
@@ -25,6 +27,7 @@ public class Proyecto {
         this.propietario = propietario;
         this.participantes = new ArrayList<>();
         this.actividades = new ArrayList<>();
+        this.paquetes = new ArrayList<>();
     }
 
     public Proyecto(String nombre, String descripcion, String fechaInicio, String fechaFinalizacion) {
@@ -35,6 +38,7 @@ public class Proyecto {
         this.fechaFinalizacion = fechaFinalizacion;
         this.participantes = new ArrayList<>();
         this.actividades = new ArrayList<>();
+        this.paquetes = new ArrayList<>();
     }
 
     public Proyecto(){
@@ -45,6 +49,7 @@ public class Proyecto {
         this.fechaFinalizacion = "";
         this.participantes = new ArrayList<>();
         this.actividades = new ArrayList<>();
+        this.paquetes = new ArrayList<>();
     }
 
     //Metodos
@@ -56,6 +61,10 @@ public class Proyecto {
     //Este metodo agrega a la lista de actividades, una actividad
     public void agregarActividad(Actividad actividad) {
         this.actividades.add(actividad);
+    }
+    
+    public void agregarPaquete(PaqueteDeTrabajo paquete) {
+        this.paquetes.add(paquete);
     }
 
 
@@ -124,5 +133,23 @@ public class Proyecto {
     public void setFechaFinalizacion(String fechaFinalizacion) {
         this.fechaFinalizacion = fechaFinalizacion;
     }
+    
+
+	public ArrayList<TipoTarea> getTipoTareas() {
+		return tipoTareas;
+	}
+
+	public void setTipoTareas(ArrayList<TipoTarea> tipoTareas) {
+		this.tipoTareas = tipoTareas;
+	}
+
+	public ArrayList<PaqueteDeTrabajo> getPaquetes() {
+		return this.paquetes;
+	}
+
+	public void setPaquetes(ArrayList<PaqueteDeTrabajo> paquetes) {
+		this.paquetes = paquetes;
+	}
+    
 }
 

@@ -14,6 +14,8 @@ public class PanelIzquierdo extends JPanel {
     private JButton participantes ;
     private JButton tiposDeActividad;
     private JButton actividad;
+    private JButton paquete;
+    private JButton tarea;
     private JButton salir;
     private Font principalFont;
 
@@ -66,7 +68,21 @@ public class PanelIzquierdo extends JPanel {
         ImageIcon iconoActividad = new ImageIcon("./img/actividadesMin.png");
         actividad.setIcon(iconoActividad);
         
-        salir = new JButton("salir                    ");
+        paquete = new JButton("Paquete de Trabajo ");
+        paquete.setPreferredSize(new Dimension(215, 50));
+        paquete.setBackground(Color.WHITE);
+        paquete.setBorderPainted(false);
+        paquete.setFont(principalFont);
+        paquete.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        tarea = new JButton("Tarea                  ");
+        tarea.setPreferredSize(new Dimension(215, 50));
+        tarea.setBackground(Color.WHITE);
+        tarea.setBorderPainted(false);
+        tarea.setFont(principalFont);
+        tarea.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        salir = new JButton("Salir                    ");
         salir.setPreferredSize(new Dimension(215, 50));
         salir.setBackground(Color.WHITE);
         salir.setBorderPainted(false);
@@ -87,6 +103,10 @@ public class PanelIzquierdo extends JPanel {
         add(tiposDeActividad);
         add(Box.createRigidArea(new Dimension(80,10)));
         add(actividad);
+        add(Box.createRigidArea(new Dimension(80,10)));
+        add(paquete);
+        add(Box.createRigidArea(new Dimension(80,10)));
+        add(tarea);
         add(Box.createRigidArea(new Dimension(80,10)));
         add(salir);
     }
@@ -139,8 +159,30 @@ public class PanelIzquierdo extends JPanel {
                 padre.revalidate();
                 padre.repaint();
 			}
-		});
-                
+        });
+		
+        
+        paquete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                padre.remove(padre.getBorderLayout().getLayoutComponent(BorderLayout.CENTER));
+                padre.add(BorderLayout.CENTER, new PPaquete(padre));
+                padre.revalidate();
+                padre.repaint();
+			}
+   });
+        tarea.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                padre.remove(padre.getBorderLayout().getLayoutComponent(BorderLayout.CENTER));
+                padre.add(BorderLayout.CENTER, new PTarea(padre));
+                padre.revalidate();
+                padre.repaint();
+			}
+   });
+        
     }
 }
 

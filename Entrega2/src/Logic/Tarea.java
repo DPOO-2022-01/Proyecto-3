@@ -1,15 +1,19 @@
 package Logic;
 
+import java.util.ArrayList;
+
 public class Tarea {
 
 	//Atributos
 		private String nombre;
 		private String descripcion;
-		private String tipo;
+		private TipoTarea tipo;
+		private ArrayList<Actividad> actividades;
 		
 		//Constructor
-		
-		public Tarea(String nombre, String descripcion, String tipo) {
+
+
+		public Tarea(String nombre, String descripcion, TipoTarea tipo) {
 			super();
 			this.nombre = nombre;
 			this.descripcion = descripcion;
@@ -36,14 +40,21 @@ public class Tarea {
 			this.descripcion = descripcion;
 		}
 
-		public String getTipo() {
+		public TipoTarea getTipo() {
 			return tipo;
 		}
 
-		public void setTipo(String tipo) {
+		public void setTipo(TipoTarea tipo) {
 			this.tipo = tipo;
 		}
 		
+		public ArrayList<Actividad> getActividades() {
+			return actividades;
+		}
+
+		public void setActividades(ArrayList<Actividad> actividades) {
+			this.actividades = actividades;
+		}
 		
 		
 }

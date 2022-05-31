@@ -6,8 +6,11 @@ import java.util.Timer;
 import Logic.Actividad;
 import Logic.Participante;
 import Logic.Proyecto;
+import Logic.Tarea;
 import Logic.TipoActividad;
+import Logic.TipoTarea;
 import Logic.Cronometro;
+import Logic.PaqueteDeTrabajo;
 
 public class Controlador {
 	private Proyecto proyecto;
@@ -43,6 +46,28 @@ public class Controlador {
 		
 	}
 	
+	public PaqueteDeTrabajo crearPaqueteInicial(String nombre, String descripcion, Proyecto proyecto)
+	{
+		PaqueteDeTrabajo paquete = new PaqueteDeTrabajo(nombre, descripcion);
+		proyecto.agregarPaquete(paquete);
+		return paquete;
+	}
+	
+	public PaqueteDeTrabajo crearPaquete(String nombre, String descripcion, PaqueteDeTrabajo paquetePadre)
+	{
+		PaqueteDeTrabajo paquete = new PaqueteDeTrabajo(nombre, descripcion);
+		paquetePadre.agregarPaquete(paquete);
+		return paquete;
+	}
+	
+	public Tarea crearTarea(String nombre, String descripcion, TipoTarea tipo, PaqueteDeTrabajo paquete)
+	{
+		Tarea tarea = new Tarea(nombre, descripcion, tipo);
+		paquete.agregarTarea(tarea);
+		return tarea;
+		
+	}
+	
 	public void asignarTipoActividad(String[] tipo) {
 		ArrayList<TipoActividad> arrayTipos = new ArrayList<>();
 		for (String tipoA: tipo) {
@@ -52,6 +77,17 @@ public class Controlador {
 			arrayTipos.add(tipoActividad);
 		}
 		proyecto.setTipoActividades(arrayTipos);
+	}
+	
+	public void asignarTipoTarea(String[] tipo) {
+		ArrayList<TipoTarea> arrayTiposTarea = new ArrayList<>();
+		for (String tipoT: tipo) {
+			TipoTarea tipoTarea = new TipoTarea();
+			tipoTarea.setNombreTipoTarea(tipoT);
+			tipoTarea.setProyecto(proyecto);
+			arrayTiposTarea.add(tipoTarea);
+		}
+		proyecto.setTipoTareas(arrayTiposTarea);;
 	}
 
 	public Proyecto getProyecto() {

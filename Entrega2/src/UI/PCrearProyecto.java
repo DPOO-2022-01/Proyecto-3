@@ -3,6 +3,7 @@ package UI;
 import javax.swing.*;
 
 import Logic.Participante;
+import Logic.Proyecto;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,10 +17,12 @@ public class PCrearProyecto extends JPanel {
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;
+    private JLabel label4;
     private JTextField nombreProyecto;
     private JTextField descripcionProyecto;
     private JTextField fechaProyecto;
     private JTextField tiposActividad;
+    private JTextField tiposTarea;
     private JButton btnCrearProyecto;
     private JScrollPane scrollBar;
 
@@ -72,11 +75,17 @@ public class PCrearProyecto extends JPanel {
         label2.setFont(secondaryFont);
         
         
-        label3 = new JLabel("Ingresa los tipos de actividad que tendrá tu proyecto (separados por coma): ");
+        label3 = new JLabel("Ingresa los tipos de ACTIVIDAD que tendrá tu proyecto (separados por coma): ");
         label3.setPreferredSize(new Dimension(50, 80));
         label3.setBackground(Color.WHITE);
         label3.setOpaque(true);
         label3.setFont(secondaryFont);
+        
+        label4 = new JLabel("Ingresa los tipos de TAREA que tendrá tu proyecto (separados por coma): ");
+        label4.setPreferredSize(new Dimension(50, 80));
+        label4.setBackground(Color.WHITE);
+        label4.setOpaque(true);
+        label4.setFont(secondaryFont);
         
         //textfield nombreproyecto
         nombreProyecto=new JTextField();
@@ -105,6 +114,13 @@ public class PCrearProyecto extends JPanel {
         tiposActividad.setBackground(Color.WHITE);
         tiposActividad.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         tiposActividad.setOpaque(true);
+        
+      //textfield tiposTarea
+        tiposTarea=new JTextField();
+        tiposTarea.setPreferredSize(new Dimension(50,20));
+        tiposTarea.setBackground(Color.WHITE);
+        tiposTarea.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        tiposTarea.setOpaque(true);
         
         
         
@@ -141,6 +157,8 @@ public class PCrearProyecto extends JPanel {
         horizontal.add(fechaProyecto);
         horizontal.add(label3);
         horizontal.add(tiposActividad);
+        horizontal.add(label4);
+        horizontal.add(tiposTarea);
         
         add(horizontal);
         add(btnCrearProyecto);
@@ -164,10 +182,13 @@ public class PCrearProyecto extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	//TODO
             	String[] tiposAct = tiposActividad.getText().split(",");
+            	String[] tiposT = tiposTarea.getText().split(",");
             	Participante participante = new Participante(padre.getNombreParticipante(), padre.getEmailParticipante());
-            	padre.getControlador().crearProyecto(nombreProyecto.getText(), descripcionProyecto.getText(), fechaProyecto.getText(), "", participante);
+            	Proyecto proyecto = padre.getControlador().crearProyecto(nombreProyecto.getText(), descripcionProyecto.getText(), fechaProyecto.getText(), "", participante);
+            	padre.getControlador().crearPaqueteInicial("Paquete de Trabajo Raiz", "Paquete de Trabajo Raiz del Proyecto", proyecto);
             	padre.getControlador().getProyecto();
             	padre.getControlador().asignarTipoActividad(tiposAct);
+            	padre.getControlador().asignarTipoTarea(tiposT);
 				setVisible(false);
 				padre.begin();
             }

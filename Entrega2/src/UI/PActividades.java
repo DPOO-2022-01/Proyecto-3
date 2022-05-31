@@ -60,6 +60,7 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 	
 	public void iniciarPanelPrincipal() {
 		panelPrincipal.setSize(this.getWidth(), this.getHeight());
+		this.setBackground(new Color(91, 190, 247));
 		JPanel panelBotones = new JPanel();
 		JPanel panelSuperior = new JPanel();
 		JPanel panelContenido = new JPanel();

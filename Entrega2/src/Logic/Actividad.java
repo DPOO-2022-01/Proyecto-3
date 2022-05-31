@@ -83,6 +83,8 @@ public class Actividad {
     public void setHorafin(String horafin) {
         this.horafin = horafin;
     }
+    
+    
 
 }
 
