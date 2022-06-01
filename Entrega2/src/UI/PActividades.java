@@ -27,6 +27,7 @@ import Controller.Controlador;
 import Logic.Actividad;
 import Logic.Participante;
 import Logic.Proyecto;
+import Logic.Tarea;
 import Logic.TipoActividad;
 
 public class PActividades extends JPanel implements ActionListener, Observer{
@@ -36,7 +37,7 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 	private VentanaPrincipal framePrincipal;
 	private String tiempo;
 	private JTextField fieldTitulo, fieldDescripcion, fieldFecha, fieldHora;
-	private ButtonGroup grupoTiposActividad;
+	private ButtonGroup grupoTiposActividad, grupoBtnsTarea;
 	
 	JLabel temporalTiempo = new JLabel();
 	
@@ -128,6 +129,9 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 		JLabel escogerTipoAct = new JLabel("Escoge el tipo de actividad a realizar");
 		grupoTiposActividad = new ButtonGroup();
 		
+		JLabel asociarTarea = new JLabel("Escoge la tarea que deseas asociar");
+		grupoBtnsTarea = new ButtonGroup();
+		
 		panelContenidoNueva.add(escogerTipoAct);
 		
 		panelNueva.setBackground(Color.LIGHT_GRAY);
@@ -155,6 +159,14 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 			JRadioButton tiposActividad = new JRadioButton(tipoAct.getNombreTipoActividad());
 			grupoTiposActividad.add(tiposActividad);
 			panelContenidoNueva.add(tiposActividad);
+		}
+		
+		panelContenidoNueva.add(asociarTarea);
+		
+		for (Tarea TareAct: proyecto.getPaquete().getTareas()) {
+			JRadioButton Tareas = new JRadioButton(TareAct.getNombre());
+			grupoBtnsTarea.add(Tareas);
+			panelContenidoNueva.add(Tareas);
 		}
 		
 		panelContenidoNueva.add(bntiniciarActividad);
@@ -252,18 +264,36 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 				panelCronometro.setVisible(false);
 				panelPrincipal.setVisible(true);
 				framePrincipal.getControlador().stopCronometro();
+				int tiempoActividad = framePrincipal.getControlador().getTiempo();
+				
 				JFrame VentanaHoraFin = new JFrame();
 				VentanaHoraFin.setSize(200, 200);
 				VentanaHoraFin.setLayout(new BorderLayout());
 				JLabel horaFin = new JLabel("Ingrese la hora de finalización:");
 				JTextField fieldHoraFin = new JTextField();
+				JButton cerrarVentana = new JButton("Guardar");
 				VentanaHoraFin.add(horaFin, BorderLayout.NORTH);
 				VentanaHoraFin.add(fieldHoraFin, BorderLayout.CENTER);
 				VentanaHoraFin.setVisible(true);
+				cerrarVentana.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						VentanaHoraFin.setVisible(false);
+					}
+				});
+				
 				TipoActividad tipoActFinal = null;
+				String tareaAsociada = "";
+				
 				for(TipoActividad tipoact: framePrincipal.getControlador().getProyecto().getTipoActividades()) {
 					if(tipoact.getNombreTipoActividad() == grupoTiposActividad.getSelection().getActionCommand()) {
 						tipoActFinal = tipoact;
+					}
+				}
+				for(Tarea tareaAct: framePrincipal.getControlador().getProyecto().getPaquete().getTareas()) {
+					if(tareaAct.getNombre() == grupoBtnsTarea.getSelection().getActionCommand()) {
+						tareaAsociada = tareaAct.getNombre();
 					}
 				}
 				Participante participante = null;
@@ -279,7 +309,9 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 						fieldHora.getText(),
 						fieldHoraFin.getText(),
 						participante,
-						framePrincipal.getControlador().getProyecto());
+						framePrincipal.getControlador().getProyecto(),
+						tareaAsociada,
+						tiempoActividad);
 			}
 		});
 		
@@ -328,7 +360,7 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 			panelEditar.setVisible(true);
 		}
 	}
-
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		

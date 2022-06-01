@@ -1,5 +1,6 @@
 package Logic;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -146,7 +147,16 @@ public class Proyecto {
 		this.paquete = paquete;
 	}
 
-
+	public Actividad encontrarActividad(String titulo) {
+		ArrayList<Actividad> arrayActs = getActividades();
+		Actividad encontrada = null;
+		for (Actividad actividad : arrayActs) {
+			if (actividad.getTitulo() == titulo) {
+				encontrada = actividad;
+			}
+		}
+		return encontrada;
+	}
     
 }
 

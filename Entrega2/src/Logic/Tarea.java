@@ -9,6 +9,7 @@ public class Tarea {
 		private String descripcion;
 		private TipoTarea tipo;
 		private ArrayList<Actividad> actividades;
+		private int tiempoTotal;
 		
 		//Constructor
 
@@ -18,6 +19,8 @@ public class Tarea {
 			this.nombre = nombre;
 			this.descripcion = descripcion;
 			this.tipo = tipo;
+			this.actividades = new ArrayList<>();
+			this.tiempoTotal = 0;
 		}
 
 		
@@ -56,5 +59,11 @@ public class Tarea {
 			this.actividades = actividades;
 		}
 		
+		public void obtenerTiempoTotal() {
+			ArrayList<Actividad> arrayActs = getActividades();
+			for (Actividad actividad : arrayActs) {
+				tiempoTotal += actividad.getTiempoTotal();
+			}
+		}
 		
 }

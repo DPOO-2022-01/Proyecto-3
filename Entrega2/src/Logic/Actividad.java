@@ -11,6 +11,8 @@ public class Actividad {
 	private String horainicio;
 	private String horafin;
 	private Participante participante;
+	private int tiempoTotalMins;
+	
 
 	//Constructor
 	public Actividad(String titulo, String descripcion, TipoActividad tipo, String fecharealizacion, String horainicio, String horafin, Participante participante) {
@@ -22,6 +24,7 @@ public class Actividad {
 		this.horainicio = horainicio;
 		this.horafin = horafin;
 		this.participante = participante;
+		this.tiempoTotalMins = 0;
     }
 
 
@@ -84,7 +87,13 @@ public class Actividad {
         this.horafin = horafin;
     }
     
+    public int getTiempoTotal() {
+    	return tiempoTotalMins; 
+    }
     
+    public void setTiempoTotal(int tiempoTotalMins) {
+    	this.tiempoTotalMins = tiempoTotalMins;
+    }
 
 }
 

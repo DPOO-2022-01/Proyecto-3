@@ -31,7 +31,7 @@ public class PanelIzquierdo extends JPanel {
 
         principalFont = new Font("Bahnschrift SemiBold SemiConden", Font.BOLD, 14);
 
-        descripcion = new JButton("Descripcion          ");
+        descripcion = new JButton("Descripcion");
         descripcion.setPreferredSize(new Dimension(215, 50));
         descripcion.setBackground(Color.WHITE);
         descripcion.setFont(principalFont);
@@ -41,7 +41,7 @@ public class PanelIzquierdo extends JPanel {
         ImageIcon iconoDescripcion = new ImageIcon("./img/descripcionMin.png");
         descripcion.setIcon(iconoDescripcion);
 
-        participantes = new JButton("Participantes        ");
+        participantes = new JButton("Participantes");
         participantes.setPreferredSize(new Dimension(215, 50));
         participantes.setBackground(Color.WHITE);
         participantes.setBorderPainted(false);
@@ -59,7 +59,7 @@ public class PanelIzquierdo extends JPanel {
         ImageIcon iconoTipoActividades = new ImageIcon("./img/tipoActividadesMin.png");
         tiposDeActividad.setIcon(iconoTipoActividades);
 
-        actividad = new JButton("Actividad              ");
+        actividad = new JButton("Actividad");
         actividad.setPreferredSize(new Dimension(215, 50));
         actividad.setBackground(Color.WHITE);
         actividad.setBorderPainted(false);
@@ -75,14 +75,14 @@ public class PanelIzquierdo extends JPanel {
         paquete.setFont(principalFont);
         paquete.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        tarea = new JButton("Tarea                  ");
+        tarea = new JButton("Tarea");
         tarea.setPreferredSize(new Dimension(215, 50));
         tarea.setBackground(Color.WHITE);
         tarea.setBorderPainted(false);
         tarea.setFont(principalFont);
         tarea.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        salir = new JButton("Salir                    ");
+        salir = new JButton("Salir");
         salir.setPreferredSize(new Dimension(215, 50));
         salir.setBackground(Color.WHITE);
         salir.setBorderPainted(false);
@@ -182,7 +182,9 @@ public class PanelIzquierdo extends JPanel {
                 padre.repaint();
 			}
    });
-        
+    }
+    public void reiniciarPaneles() {
+    	
     }
 }
 

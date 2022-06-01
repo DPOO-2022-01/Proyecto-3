@@ -38,12 +38,13 @@ public class Controlador {
 		return proyecto;
 	}
 	
-	public Actividad crearActividad(String titulo, String descripcion, TipoActividad tipo, String fecharealizacion,String horainicio,String horafin, Participante participante, Proyecto proyecto)
+	public Actividad crearActividad(String titulo, String descripcion, TipoActividad tipo, String fecharealizacion,String horainicio,String horafin, Participante participante, Proyecto proyecto, String tarea, int Tiempo)
 	{
 		Actividad actividad = new Actividad(titulo, descripcion, tipo, fecharealizacion, horainicio, horafin, participante);
+		actividad.setTiempoTotal(Tiempo);
 		proyecto.agregarActividad(actividad);
-		return actividad;
-		
+		asociarActividadConTarea(actividad, tarea);
+		return actividad;	
 	}
 	
 	public PaqueteDeTrabajo crearPaqueteInicial(String nombre, String descripcion)
@@ -87,6 +88,18 @@ public class Controlador {
 			arrayTiposTarea.add(tipoTarea);
 		}
 		proyecto.setTipoTareas(arrayTiposTarea);;
+	}
+	
+	public ArrayList<Tarea> obtenerTareas(Proyecto proyecto) {
+		return proyecto.getPaquete().getTareas();
+	}
+	
+	public void asociarActividadConTarea(Actividad actividad, String tareaAct) {
+		for (Tarea tarea : proyecto.getPaquete().getTareas()) {
+			if (tareaAct == tarea.getNombre()) {
+				tarea.getActividades().add(actividad);
+			}
+		}
 	}
 
 	public Proyecto getProyecto() {
