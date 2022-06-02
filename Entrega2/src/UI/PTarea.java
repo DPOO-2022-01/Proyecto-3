@@ -9,12 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,7 +25,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import Controller.Controlador;
+import Logic.Equipo;
 import Logic.PaqueteDeTrabajo;
+import Logic.Participante;
 import Logic.Proyecto;
 import Logic.Tarea;
 import Logic.TipoActividad;
@@ -37,6 +42,7 @@ public class PTarea extends JPanel implements ActionListener, Observer{
 	private ButtonGroup grupoTiposTarea, grupoPaquete;
 	private JRadioButton tiposPaquetes;
 	private JPanel panelContenidoNueva;
+	private JComboBox<Equipo> equipos;
 
     public PTarea(VentanaPrincipal padre) {
         this.padre = padre;
@@ -103,6 +109,15 @@ public class PTarea extends JPanel implements ActionListener, Observer{
 		nombrePanel.setOpaque(true);
 		nombrePanel.setForeground(new Color(91, 190, 247));
 		
+		equipos = new JComboBox<Equipo>();
+		equipos.setPreferredSize(new Dimension(400, 30));
+		equipos.setBackground(Color.WHITE);
+		equipos.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		equipos.setOpaque(true);
+		agregarEquipos();
+		
+		
+		
 		ingresarTitulo.setText("Ingresa el nombre de la tarea");
 		panelSuperiorNueva.add(nombrePanel);
 		panelContenidoNueva.add(ingresarTitulo);
@@ -137,7 +152,7 @@ public class PTarea extends JPanel implements ActionListener, Observer{
 				panelContenidoNueva.add(tiposPaquetes);
 				buscarHijo(tipoP);
 			}
-		
+		panelContenidoNueva.add(equipos);
 		bntTarea.addActionListener(new ActionListener() {
 			
 			@Override
@@ -184,7 +199,7 @@ public class PTarea extends JPanel implements ActionListener, Observer{
 							JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					Tarea tarea = padre.getControlador().crearTarea(nombre, descripcion, tipo, paquete);
+					Tarea tarea = padre.getControlador().crearTarea(nombre, descripcion, tipo, paquete,(Equipo)equipos.getSelectedItem());
 					if ( tarea != null)
 					{
 						JOptionPane.showMessageDialog(panelCrear, "Se ha creado con éxito la tarea \n" + tarea.getNombre(), "Atencion!",
@@ -248,7 +263,17 @@ public class PTarea extends JPanel implements ActionListener, Observer{
 			panelCrear.setVisible(true);
 			
 		}
+		
 	}
+	
+	private void agregarEquipos() {
+		for (Equipo equipo : padre.getControlador().getProyecto().getEquipos()) {
+			equipos.addItem(equipo);
+			
+		}
+		
+	}
+
 
 	@Override
 	public void update(Observable o, Object arg) {

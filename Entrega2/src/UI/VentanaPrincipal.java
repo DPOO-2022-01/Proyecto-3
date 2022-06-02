@@ -37,6 +37,7 @@ public class VentanaPrincipal extends JFrame {
     	panelCalendario = new PCalendarioActividad();
         panelSuperior = new PanelSuperior(this);
         panelIzquierdo = new PanelIzquierdo(this);
+       
         
         add(panelIzquierdo, BorderLayout.WEST);
         add(panelSuperior, BorderLayout.NORTH);

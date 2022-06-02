@@ -1,6 +1,7 @@
 package Controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Timer;
 
 import Logic.Actividad;
@@ -10,6 +11,7 @@ import Logic.Tarea;
 import Logic.TipoActividad;
 import Logic.TipoTarea;
 import Logic.Cronometro;
+import Logic.Equipo;
 import Logic.PaqueteDeTrabajo;
 
 public class Controlador {
@@ -25,7 +27,8 @@ public class Controlador {
 	//Todas estas funciones sirven como mediador entre la consola y la lógica. Esto es para un menos acoplamiento
 	public Participante crearParticipante(String nombre,String correo ) {
 		Participante participante = new Participante(nombre,correo);
-		participantes.add(participante);
+		//participantes.add(participante);
+		proyecto.agregarParticipante(participante);
 		return participante;
 		
 	}
@@ -60,10 +63,12 @@ public class Controlador {
 		return paquete;
 	}
 	
-	public Tarea crearTarea(String nombre, String descripcion, TipoTarea tipo, PaqueteDeTrabajo paquete)
+	public Tarea crearTarea(String nombre, String descripcion, TipoTarea tipo, PaqueteDeTrabajo paquete,Equipo equipo)
 	{
 		Tarea tarea = new Tarea(nombre, descripcion, tipo);
 		paquete.agregarTarea(tarea);
+		equipo.getTareasAsignadas().add(tarea);
+		equipo.getTareasPendientes().add(tarea);
 		return tarea;
 		
 	}
@@ -92,6 +97,36 @@ public class Controlador {
 	
 	public ArrayList<Tarea> obtenerTareas(Proyecto proyecto) {
 		return proyecto.getPaquete().getTareas();
+	}
+	
+	public Equipo crearEquipo(String nombre) {
+		Equipo equipo = new Equipo(nombre);
+		proyecto.getEquipos().add(equipo);
+		return equipo;
+	}
+	
+	public void agregarIntegranteEquipo(String nombre,int posParticipante) {
+		Equipo equipo = obtenerEquipo(nombre);
+		if (equipo==null) {
+			equipo=crearEquipo(nombre);
+		}
+		Participante participante=obtenerParticipante(posParticipante);
+		equipo.getIntegrantes().add(participante);
+		proyecto.getParticipantesDisponibles().remove(participante);
+	}
+	private Equipo obtenerEquipo(String nombre) {
+		for(Equipo equipo:proyecto.getEquipos()) {
+			if (equipo.getNombre().equals(nombre)) {
+				return equipo;
+			}
+				
+		}
+		return null;
+	}
+	
+	private Participante obtenerParticipante(int posParticipante) {
+		return proyecto.getParticipantesDisponibles().get(posParticipante);
+		
 	}
 	
 	public void asociarActividadConTarea(Actividad actividad, String tareaAct) {
