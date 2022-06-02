@@ -10,6 +10,7 @@ public class Tarea {
 		private TipoTarea tipo;
 		private ArrayList<Actividad> actividades;
 		private int tiempoTotal;
+		private boolean finalizada;
 		
 		//Constructor
 
@@ -66,4 +67,11 @@ public class Tarea {
 			}
 		}
 		
+		public void setFinalizada(boolean finalizada) {
+			this.finalizada = finalizada;
+		}
+		
+		public boolean getFinalizada() {
+			return finalizada;
+		}
 }

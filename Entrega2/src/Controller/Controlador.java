@@ -24,7 +24,7 @@ public class Controlador {
 		this.participantes =new ArrayList<>();
 	}
 	
-	//Todas estas funciones sirven como mediador entre la consola y la lógica. Esto es para un menos acoplamiento
+	//Todas estas funciones sirven como mediador entre la consola y la lï¿½gica. Esto es para un menos acoplamiento
 	public Participante crearParticipante(String nombre,String correo ) {
 		Participante participante = new Participante(nombre,correo);
 		//participantes.add(participante);
@@ -41,12 +41,17 @@ public class Controlador {
 		return proyecto;
 	}
 	
-	public Actividad crearActividad(String titulo, String descripcion, TipoActividad tipo, String fecharealizacion,String horainicio,String horafin, Participante participante, Proyecto proyecto, String tarea, int Tiempo)
+	public Actividad crearActividad(String titulo, String descripcion, TipoActividad tipo, String fecharealizacion,String horainicio,String horafin, Participante participante, Proyecto proyecto, String tarea, int Tiempo, String finaliza)
 	{
 		Actividad actividad = new Actividad(titulo, descripcion, tipo, fecharealizacion, horainicio, horafin, participante);
 		actividad.setTiempoTotal(Tiempo);
 		proyecto.agregarActividad(actividad);
 		asociarActividadConTarea(actividad, tarea);
+		if (finaliza == "Si") {
+			finalizaTarea(true, tarea);
+		}else {
+			finalizaTarea(false, tarea);
+		}
 		return actividad;	
 	}
 	
@@ -66,6 +71,7 @@ public class Controlador {
 	public Tarea crearTarea(String nombre, String descripcion, TipoTarea tipo, PaqueteDeTrabajo paquete,Equipo equipo)
 	{
 		Tarea tarea = new Tarea(nombre, descripcion, tipo);
+		
 		paquete.agregarTarea(tarea);
 		equipo.getTareasAsignadas().add(tarea);
 		equipo.getTareasPendientes().add(tarea);
@@ -192,6 +198,14 @@ public class Controlador {
 		
 		
 		return suma;
+	}
+	
+	public void finalizaTarea(boolean finalizada, String tareaAct) {
+		for (Tarea tarea : proyecto.getPaquete().getTareas()) {
+			if (tareaAct == tarea.getNombre()) {
+				tarea.setFinalizada(finalizada);
+			}
+		}
 	}
 
 	public Proyecto getProyecto() {

@@ -123,7 +123,7 @@ public class PTarea extends JPanel implements ActionListener, Observer{
 		panelContenidoNueva.add(ingresarTitulo);
 		panelContenidoNueva.add(fieldNombre);
 		
-		JLabel ingresarDescripcion = new JLabel("Ingresa una descripción corta de la tarea");
+		JLabel ingresarDescripcion = new JLabel("Ingresa una descripciï¿½n corta de la tarea");
 		
 		panelContenidoNueva.add(ingresarDescripcion);
 		panelContenidoNueva.add(fieldDescripcion);
@@ -139,7 +139,7 @@ public class PTarea extends JPanel implements ActionListener, Observer{
 			panelContenidoNueva.add(tiposTarea);
 		}
 		
-		JLabel escogerPaquete = new JLabel("Escoge el paquete de trabajo que se le asignará a la tarea");
+		JLabel escogerPaquete = new JLabel("Escoge el paquete de trabajo que se le asignarï¿½ a la tarea");
 		
 		panelContenidoNueva.add(escogerPaquete);
 		grupoPaquete = new ButtonGroup();
@@ -202,7 +202,7 @@ public class PTarea extends JPanel implements ActionListener, Observer{
 					Tarea tarea = padre.getControlador().crearTarea(nombre, descripcion, tipo, paquete,(Equipo)equipos.getSelectedItem());
 					if ( tarea != null)
 					{
-						JOptionPane.showMessageDialog(panelCrear, "Se ha creado con éxito la tarea \n" + tarea.getNombre(), "Atencion!",
+						JOptionPane.showMessageDialog(panelCrear, "Se ha creado con ï¿½xito la tarea \n" + tarea.getNombre(), "Atencion!",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
 					System.out.println(padre.getControlador().ObtenerTareas());
