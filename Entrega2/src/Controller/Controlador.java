@@ -136,6 +136,24 @@ public class Controlador {
 			}
 		}
 	}
+	public String obtenerNombre() {
+		return proyecto.getNombre();
+	
+	}
+	
+	public String cantidadEquipos() {
+		return String.valueOf(proyecto.getEquipos().size());
+	}
+	
+	public String cantidadPartipantes() {
+		return String.valueOf(proyecto.getParticipantes().size());
+		
+	}
+	
+	public String cantidadTareas() {
+		return String.valueOf(proyecto.cantidad.size());
+	}
+	
 
 	public Proyecto getProyecto() {
 		return proyecto;
