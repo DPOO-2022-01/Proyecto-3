@@ -141,6 +141,15 @@ public class Controlador {
 	
 	}
 	
+	public String obtenerDescripcion() {
+		return proyecto.getDescripcion();
+	
+	}
+	
+	public String obtenerPropietario() {
+		return proyecto.getPropietario().getNombre();
+	
+	}
 	public String cantidadEquipos() {
 		return String.valueOf(proyecto.getEquipos().size());
 	}
@@ -150,10 +159,40 @@ public class Controlador {
 		
 	}
 	
-	public String cantidadTareas() {
-		return String.valueOf(proyecto.cantidad.size());
+	/*public String cantidadPaquetes() {
+		return String.valueOf(proyecto.getPaquete().size());?
+		
+	}*/
+	
+	public String ObtenerTareas() {
+		return String.valueOf(ObtenerTareas1(0,proyecto.getPaquete()));
+		
+	}
+	public int ObtenerTareas1(int suma,PaqueteDeTrabajo paqueteRaiz) {
+		
+		suma+= paqueteRaiz.getTareas().size();
+		for (PaqueteDeTrabajo paquete : paqueteRaiz.getPaquetes()) {
+			suma+=ObtenerTareas1(0,paquete);
+		}
+		
+		
+		return suma;
 	}
 	
+	public String ObtenerPaquetes() {
+		return String.valueOf(ObtenerPaquetes1(0,proyecto.getPaquete()));
+		
+	}
+	public int ObtenerPaquetes1(int suma,PaqueteDeTrabajo paqueteRaiz) {
+		
+		suma+= paqueteRaiz.getPaquetes().size();
+		for (PaqueteDeTrabajo paquete : paqueteRaiz.getPaquetes()) {
+			suma+=ObtenerPaquetes1(0,paquete);
+		}
+		
+		
+		return suma;
+	}
 
 	public Proyecto getProyecto() {
 		return proyecto;

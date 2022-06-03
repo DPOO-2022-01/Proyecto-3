@@ -16,6 +16,7 @@ public class PanelIzquierdo extends JPanel {
 	private JButton paquete;
 	private JButton tarea;
 	private JButton equipo;
+	private JButton reporte;
 	private JButton salir;
 	private Font principalFont;
 
@@ -27,12 +28,12 @@ public class PanelIzquierdo extends JPanel {
 
 	public void beginComponents() {
 		this.setBackground(new Color(255, 255, 255));
-		this.setPreferredSize(new Dimension(230, 500));
+		this.setPreferredSize(new Dimension(230, 550));
 
 		principalFont = new Font("Bahnschrift SemiBold SemiConden", Font.BOLD, 14);
 
 		descripcion = new JButton("Descripcion");
-		descripcion.setPreferredSize(new Dimension(215, 50));
+		descripcion.setPreferredSize(new Dimension(215, 45));
 		descripcion.setBackground(Color.WHITE);
 		descripcion.setFont(principalFont);
 		descripcion.setOpaque(true);
@@ -42,7 +43,7 @@ public class PanelIzquierdo extends JPanel {
 		descripcion.setIcon(iconoDescripcion);
 
 		participantes = new JButton("Participantes");
-		participantes.setPreferredSize(new Dimension(215, 50));
+		participantes.setPreferredSize(new Dimension(215, 45));
 		participantes.setBackground(Color.WHITE);
 		participantes.setBorderPainted(false);
 		participantes.setFont(principalFont);
@@ -51,7 +52,7 @@ public class PanelIzquierdo extends JPanel {
 		participantes.setIcon(iconoParticipantes);
 
 		tiposDeActividad = new JButton("Tipos de actividad");
-		tiposDeActividad.setPreferredSize(new Dimension(215, 50));
+		tiposDeActividad.setPreferredSize(new Dimension(215, 45));
 		tiposDeActividad.setBackground(Color.WHITE);
 		tiposDeActividad.setBorderPainted(false);
 		tiposDeActividad.setFont(principalFont);
@@ -60,7 +61,7 @@ public class PanelIzquierdo extends JPanel {
 		tiposDeActividad.setIcon(iconoTipoActividades);
 
 		actividad = new JButton("Actividad");
-		actividad.setPreferredSize(new Dimension(215, 50));
+		actividad.setPreferredSize(new Dimension(215, 45));
 		actividad.setBackground(Color.WHITE);
 		actividad.setBorderPainted(false);
 		actividad.setFont(principalFont);
@@ -69,28 +70,35 @@ public class PanelIzquierdo extends JPanel {
 		actividad.setIcon(iconoActividad);
 
 		paquete = new JButton("Paquete de Trabajo ");
-		paquete.setPreferredSize(new Dimension(215, 50));
+		paquete.setPreferredSize(new Dimension(215, 45));
 		paquete.setBackground(Color.WHITE);
 		paquete.setBorderPainted(false);
 		paquete.setFont(principalFont);
 		paquete.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		tarea = new JButton("Tarea");
-		tarea.setPreferredSize(new Dimension(215, 50));
+		tarea.setPreferredSize(new Dimension(215, 45));
 		tarea.setBackground(Color.WHITE);
 		tarea.setBorderPainted(false);
 		tarea.setFont(principalFont);
 		tarea.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		equipo = new JButton("Equipos");
-		equipo.setPreferredSize(new Dimension(215, 50));
+		equipo.setPreferredSize(new Dimension(215, 45));
 		equipo.setBackground(Color.WHITE);
 		equipo.setBorderPainted(false);
 		equipo.setFont(principalFont);
 		equipo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+		reporte = new JButton("Reporte");
+		reporte.setPreferredSize(new Dimension(215, 45));
+		reporte.setBackground(Color.WHITE);
+		reporte.setBorderPainted(false);
+		reporte.setFont(principalFont);
+		reporte.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 		salir = new JButton("Salir");
-		salir.setPreferredSize(new Dimension(215, 50));
+		salir.setPreferredSize(new Dimension(215, 45));
 		salir.setBackground(Color.WHITE);
 		salir.setBorderPainted(false);
 		salir.setFont(principalFont);
@@ -100,21 +108,23 @@ public class PanelIzquierdo extends JPanel {
 
 		addFncButton();
 
-		add(Box.createRigidArea(new Dimension(200, 50)));
+		add(Box.createRigidArea(new Dimension(200, 10)));
 		add(descripcion);
-		add(Box.createRigidArea(new Dimension(80, 10)));
+		add(Box.createRigidArea(new Dimension(80, 0)));
 		add(participantes);
-		add(Box.createRigidArea(new Dimension(80, 10)));
+		add(Box.createRigidArea(new Dimension(80, 0)));
 		add(tiposDeActividad);
-		add(Box.createRigidArea(new Dimension(80, 10)));
+		add(Box.createRigidArea(new Dimension(80, 0)));
 		add(actividad);
-		add(Box.createRigidArea(new Dimension(80, 10)));
+		add(Box.createRigidArea(new Dimension(80, 0)));
 		add(paquete);
-		add(Box.createRigidArea(new Dimension(80, 10)));
+		add(Box.createRigidArea(new Dimension(80, 0)));
 		add(tarea);
-		add(Box.createRigidArea(new Dimension(80, 10)));
+		add(Box.createRigidArea(new Dimension(80, 0)));
 		add(equipo);
-		add(Box.createRigidArea(new Dimension(80, 10)));
+		add(Box.createRigidArea(new Dimension(80, 0)));
+		add(reporte);
+		add(Box.createRigidArea(new Dimension(80, 0)));
 		add(salir);
 	}
 
@@ -198,6 +208,18 @@ public class PanelIzquierdo extends JPanel {
 				padre.repaint();
 			}
 		});
+
+		reporte.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				padre.remove(padre.getBorderLayout().getLayoutComponent(BorderLayout.CENTER));
+				padre.add(BorderLayout.CENTER, new PanelReporte(padre));
+				padre.revalidate();
+				padre.repaint();
+			}
+		});
+
 	}
 
 	public void reiniciarPaneles() {

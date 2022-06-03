@@ -205,6 +205,7 @@ public class PTarea extends JPanel implements ActionListener, Observer{
 						JOptionPane.showMessageDialog(panelCrear, "Se ha creado con éxito la tarea \n" + tarea.getNombre(), "Atencion!",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
+					System.out.println(padre.getControlador().ObtenerTareas());
 				}
 			}
 			});
