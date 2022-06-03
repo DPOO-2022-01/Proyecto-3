@@ -88,6 +88,7 @@ public class PCuenta extends JPanel{
 				panelPrincipal.setVisible(false);
 				iniciarPanelCrearProyecto();
 				
+				
 			}
 		};
 		
@@ -97,6 +98,7 @@ public class PCuenta extends JPanel{
 			public void actionPerformed(ActionEvent ae) {
 				panelPrincipal.setVisible(false);
 				padre.begin();
+				
 			
 			}
 		};

@@ -1,5 +1,6 @@
 package Logic;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -12,11 +13,16 @@ public class Proyecto {
     private String fechaFinalizacion;
     private Participante propietario;
     private ArrayList<Participante> participantes;
+    private ArrayList<Participante> participantesDisponibles;
     private ArrayList<TipoActividad> tipoActividades;
     private ArrayList<Actividad> actividades;
+    private PaqueteDeTrabajo paquete;
+    private ArrayList<TipoTarea> tipoTareas;
+    private ArrayList<Equipo> equipos;
+
 
     //Constructor
-    public Proyecto(String nombre, String descripcion, String fechaInicio, String fechaFinalizacion, Participante propietario) {
+    public Proyecto(String nombre, String descripcion, String fechaInicio, String fechaFinalizacion, Participante propietario, PaqueteDeTrabajo paquete) {
         super();
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -25,9 +31,12 @@ public class Proyecto {
         this.propietario = propietario;
         this.participantes = new ArrayList<>();
         this.actividades = new ArrayList<>();
+        this.equipos= new ArrayList<>();
+        this.participantesDisponibles= new ArrayList<>();
+        this.paquete = paquete;
     }
 
-    public Proyecto(String nombre, String descripcion, String fechaInicio, String fechaFinalizacion) {
+    public Proyecto(String nombre, String descripcion, String fechaInicio, String fechaFinalizacion,  PaqueteDeTrabajo paquete) {
         super();
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -35,6 +44,9 @@ public class Proyecto {
         this.fechaFinalizacion = fechaFinalizacion;
         this.participantes = new ArrayList<>();
         this.actividades = new ArrayList<>();
+        this.equipos= new ArrayList<>();
+        this.participantesDisponibles= new ArrayList<>();
+        this.paquete = paquete;
     }
 
     public Proyecto(){
@@ -45,12 +57,16 @@ public class Proyecto {
         this.fechaFinalizacion = "";
         this.participantes = new ArrayList<>();
         this.actividades = new ArrayList<>();
+        this.equipos= new ArrayList<>();
+        this.participantesDisponibles= new ArrayList<>();
     }
 
     //Metodos
     //Este metodo agrega a la lista de participantes, un participante
     public void agregarParticipante(Participante participante) {
         this.participantes.add(participante);
+        this.participantesDisponibles.add(participante);
+        
     }
 
     //Este metodo agrega a la lista de actividades, una actividad
@@ -124,5 +140,49 @@ public class Proyecto {
     public void setFechaFinalizacion(String fechaFinalizacion) {
         this.fechaFinalizacion = fechaFinalizacion;
     }
+    
+
+	public ArrayList<TipoTarea> getTipoTareas() {
+		return tipoTareas;
+	}
+
+	public void setTipoTareas(ArrayList<TipoTarea> tipoTareas) {
+		this.tipoTareas = tipoTareas;
+	}
+
+	public PaqueteDeTrabajo getPaquete() {
+		return paquete;
+	}
+
+	public void setPaquete(PaqueteDeTrabajo paquete) {
+		this.paquete = paquete;
+	}
+	
+	public void setEquipos(ArrayList<Equipo> equipos) {
+		this.equipos = equipos;
+	}
+	
+	public ArrayList<Equipo> getEquipos() {
+		return equipos;
+	}
+	public void setParticipantesDisponibles(ArrayList<Participante> participantesDisponibles) {
+		this.participantesDisponibles = participantesDisponibles;
+	}
+	
+	public ArrayList<Participante> getParticipantesDisponibles() {
+		return participantesDisponibles;
+	}
+
+	public Actividad encontrarActividad(String titulo) {
+		ArrayList<Actividad> arrayActs = getActividades();
+		Actividad encontrada = null;
+		for (Actividad actividad : arrayActs) {
+			if (actividad.getTitulo() == titulo) {
+				encontrada = actividad;
+			}
+		}
+		return encontrada;
+	}
+    
 }
 

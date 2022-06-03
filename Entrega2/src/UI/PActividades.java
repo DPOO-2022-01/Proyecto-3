@@ -8,6 +8,8 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
@@ -25,18 +27,20 @@ import javax.swing.border.Border;
 
 import Controller.Controlador;
 import Logic.Actividad;
+import Logic.PaqueteDeTrabajo;
 import Logic.Participante;
 import Logic.Proyecto;
+import Logic.Tarea;
 import Logic.TipoActividad;
 
-public class PActividades extends JPanel implements ActionListener, Observer{
+public class PActividades extends JPanel implements ActionListener{
 	private JPanel panelEditar, panelNueva, panelPrincipal, panelCronometro;
 	private JLabel nombreTitulo;
 	private JButton btnNueva, btnEditar;
 	private VentanaPrincipal framePrincipal;
 	private String tiempo;
 	private JTextField fieldTitulo, fieldDescripcion, fieldFecha, fieldHora;
-	private ButtonGroup grupoTiposActividad;
+	private ButtonGroup grupoTiposActividad, grupoBtnsTarea, grupoPaquetes, grupoFinaliza;
 	
 	JLabel temporalTiempo = new JLabel();
 	
@@ -47,7 +51,6 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 		fieldFecha = new JTextField();
 		fieldFecha = new JTextField();
 		fieldHora = new JTextField();
-		grupoTiposActividad = new ButtonGroup();
 		
 		setLayout(new BorderLayout());
 		nombreTitulo = new JLabel("No");
@@ -56,10 +59,12 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 		panelPrincipal = new JPanel();
 		panelCronometro = new JPanel();
 		iniciarPanelPrincipal();
+		mostrarPaquetes();
 	}
 	
 	public void iniciarPanelPrincipal() {
 		panelPrincipal.setSize(this.getWidth(), this.getHeight());
+		this.setBackground(new Color(91, 190, 247));
 		JPanel panelBotones = new JPanel();
 		JPanel panelSuperior = new JPanel();
 		JPanel panelContenido = new JPanel();
@@ -91,7 +96,50 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 		
 	}
 	
+	public void mostrarPaquetes() {
+		Proyecto proyecto = framePrincipal.getControlador().getProyecto();
+		//JFrame para seleccionar el paquete y la tarea en la que se debe asociar la actividad
+		JFrame ventanaTarea = new JFrame();
+		JButton guardar = new JButton("Guardar");
+		JPanel contenidoVentanaTarea = new JPanel();
+		JLabel stringPanelVentana = new JLabel("Seleccione el paquete de trabajo en el que trabajará");
+		
+		contenidoVentanaTarea.setLayout(new BoxLayout(contenidoVentanaTarea, BoxLayout.Y_AXIS));
+		contenidoVentanaTarea.add(stringPanelVentana);
+		
+		ventanaTarea.setSize(350, 400);
+		ventanaTarea.setLocationRelativeTo(null);
+		ventanaTarea.setTitle("Seleccione el paquete de trabajo");
+		
+		ArrayList<PaqueteDeTrabajo> paquetesArray =  proyecto.getPaquete().getPaquetes();
+		grupoPaquetes = new ButtonGroup();
+		
+		for (PaqueteDeTrabajo paqueteDeTrabajo : paquetesArray) {
+			JRadioButton btnPaquete = new JRadioButton(paqueteDeTrabajo.getNombre());
+			btnPaquete.setActionCommand(paqueteDeTrabajo.getNombre());
+			grupoPaquetes.add(btnPaquete);
+			contenidoVentanaTarea.add(btnPaquete);
+		}
+		guardar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaTarea.setVisible(false);
+				mostrarPanelNueva();
+			}
+		});
+		
+		contenidoVentanaTarea.add(guardar);
+		
+		ventanaTarea.add(contenidoVentanaTarea);
+		ventanaTarea.setVisible(true);
+	}
+	
 	public void mostrarPanelNueva() {
+		Proyecto proyecto = framePrincipal.getControlador().getProyecto();
+		ArrayList<PaqueteDeTrabajo> paquetesArray =  proyecto.getPaquete().getPaquetes();
+		String seleccionPaquete = grupoPaquetes.getSelection().getActionCommand();
+		//Panel de información para la actividad
 		panelNueva = new JPanel();
 		JPanel panelContenidoNueva = new JPanel();
 		JLabel ingresarTitulo = new JLabel();
@@ -127,6 +175,9 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 		JLabel escogerTipoAct = new JLabel("Escoge el tipo de actividad a realizar");
 		grupoTiposActividad = new ButtonGroup();
 		
+		JLabel asociarTarea = new JLabel("Escoge la tarea que deseas asociar");
+		grupoBtnsTarea = new ButtonGroup();
+		
 		panelContenidoNueva.add(escogerTipoAct);
 		
 		panelNueva.setBackground(Color.LIGHT_GRAY);
@@ -149,18 +200,51 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 			}
 		});
 		
-		Proyecto proyecto = framePrincipal.getControlador().getProyecto();
 		for (TipoActividad tipoAct: proyecto.getTipoActividades()) {
 			JRadioButton tiposActividad = new JRadioButton(tipoAct.getNombreTipoActividad());
+			tiposActividad.setActionCommand(tipoAct.getNombreTipoActividad());
 			grupoTiposActividad.add(tiposActividad);
 			panelContenidoNueva.add(tiposActividad);
 		}
+		
+		panelContenidoNueva.add(asociarTarea);
+		
+		ArrayList<Tarea> tareasArray = null;
+		for (PaqueteDeTrabajo paqueteDeTrabajo : paquetesArray) {
+			if (paqueteDeTrabajo.getNombre() == seleccionPaquete) {
+				tareasArray = paqueteDeTrabajo.getTareas();
+			}
+		}
+		actualizarTareas(tareasArray, panelContenidoNueva);
+		
+		JLabel terminaAct = new JLabel("¿Termina la tarea?");
+		panelContenidoNueva.add(terminaAct);
+		
+		JRadioButton siFinaliza = new JRadioButton("Si");
+		siFinaliza.setActionCommand("Si");
+		JRadioButton noFinaliza = new JRadioButton("No");
+		noFinaliza.setActionCommand("No");
 		
 		panelContenidoNueva.add(bntiniciarActividad);
 		panelNueva.setBackground(Color.LIGHT_GRAY);
 		panelNueva.add(panelContenidoNueva, BorderLayout.CENTER);
 		panelNueva.add(btnVolver, BorderLayout.SOUTH);
 		this.add(panelNueva,BorderLayout.CENTER);
+	}
+	
+	public void actualizarTareas(ArrayList<Tarea> tarea, JPanel panel) {
+		if (tarea.isEmpty()) {
+			JRadioButton tareas = new JRadioButton("No hay tareas");
+			grupoBtnsTarea.add(tareas);
+			panel.add(tareas);
+		} else {
+			for (Tarea tareAct: tarea) {
+				JRadioButton tareas = new JRadioButton(tareAct.getNombre());
+				tareas.setActionCommand(tareAct.getNombre());
+				grupoBtnsTarea.add(tareas);
+				panel.add(tareas);
+			}
+		}
 	}
 	
 	public void mostrarPanelEditar() {
@@ -251,18 +335,36 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 				panelCronometro.setVisible(false);
 				panelPrincipal.setVisible(true);
 				framePrincipal.getControlador().stopCronometro();
+				int tiempoActividad = framePrincipal.getControlador().getTiempo();
+				
 				JFrame VentanaHoraFin = new JFrame();
 				VentanaHoraFin.setSize(200, 200);
 				VentanaHoraFin.setLayout(new BorderLayout());
 				JLabel horaFin = new JLabel("Ingrese la hora de finalización:");
 				JTextField fieldHoraFin = new JTextField();
+				JButton cerrarVentana = new JButton("Guardar");
 				VentanaHoraFin.add(horaFin, BorderLayout.NORTH);
 				VentanaHoraFin.add(fieldHoraFin, BorderLayout.CENTER);
 				VentanaHoraFin.setVisible(true);
+				cerrarVentana.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						VentanaHoraFin.setVisible(false);
+					}
+				});
+				
 				TipoActividad tipoActFinal = null;
+				String tareaAsociada = "";
+				
 				for(TipoActividad tipoact: framePrincipal.getControlador().getProyecto().getTipoActividades()) {
 					if(tipoact.getNombreTipoActividad() == grupoTiposActividad.getSelection().getActionCommand()) {
 						tipoActFinal = tipoact;
+					}
+				}
+				for(Tarea tareaAct: framePrincipal.getControlador().getProyecto().getPaquete().getTareas()) {
+					if(tareaAct.getNombre() == grupoBtnsTarea.getSelection().getActionCommand()) {
+						tareaAsociada = tareaAct.getNombre();
 					}
 				}
 				Participante participante = null;
@@ -271,6 +373,7 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 						participante = participanteActual;
 					}
 				}
+				String finaliza = grupoFinaliza.getSelection().getActionCommand(); 
 				framePrincipal.getControlador().crearActividad(fieldDescripcion.getText(),
 						fieldDescripcion.getText(),
 						tipoActFinal,
@@ -278,7 +381,9 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 						fieldHora.getText(),
 						fieldHoraFin.getText(),
 						participante,
-						framePrincipal.getControlador().getProyecto());
+						framePrincipal.getControlador().getProyecto(),
+						tareaAsociada,
+						tiempoActividad, finaliza);
 			}
 		});
 		
@@ -326,11 +431,6 @@ public class PActividades extends JPanel implements ActionListener, Observer{
 			mostrarPanelEditar();
 			panelEditar.setVisible(true);
 		}
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		
 	}
 	
 	

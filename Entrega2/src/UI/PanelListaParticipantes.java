@@ -78,7 +78,8 @@ public class PanelListaParticipantes extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 padre.remove(padre.getBorderLayout().getLayoutComponent(BorderLayout.CENTER));
-                padre.add(BorderLayout.CENTER, padre.getPanelCrearParticipante());
+                //padre.add(BorderLayout.CENTER, padre.getPanelCrearParticipante());
+                padre.add(BorderLayout.CENTER, new PanelCrearParticipante(padre));
                 padre.revalidate();
                 padre.repaint();
             }
