@@ -185,6 +185,46 @@ public class Controlador {
 		return suma;
 	}
 	
+	public int ObtenerTareasPendientes() {
+		return(ObtenerTareasPendientes1(0,proyecto.getPaquete()));
+		
+	}
+	public int ObtenerTareasPendientes1(int suma,PaqueteDeTrabajo paqueteRaiz) {
+		for (int i = 0; i < paqueteRaiz.getTareas().size(); i++) {
+			if  (!paqueteRaiz.getTareas().get(i).getFinalizada()) {
+				suma++;
+			}
+			
+		}
+		
+		for (PaqueteDeTrabajo paquete : paqueteRaiz.getPaquetes()) {
+			suma+=ObtenerTareasPendientes1(0,paquete);
+		}
+		
+		
+		return suma;
+	}
+	
+	public int ObtenerTareasFinalizadas() {
+		return(ObtenerTareasFinalizadas1(0,proyecto.getPaquete()));
+		
+	}
+	public int ObtenerTareasFinalizadas1(int suma,PaqueteDeTrabajo paqueteRaiz) {
+		for (int i = 0; i < paqueteRaiz.getTareas().size(); i++) {
+			if  (paqueteRaiz.getTareas().get(i).getFinalizada()) {
+				suma++;
+			}
+			
+		}
+		
+		for (PaqueteDeTrabajo paquete : paqueteRaiz.getPaquetes()) {
+			suma+=ObtenerTareasFinalizadas1(0,paquete);
+		}
+		
+		
+		return suma;
+	}
+	
 	public String ObtenerPaquetes() {
 		return String.valueOf(ObtenerPaquetes1(0,proyecto.getPaquete()));
 		
@@ -207,7 +247,7 @@ public class Controlador {
 			}
 		}
 	}
-
+	
 	public Proyecto getProyecto() {
 		return proyecto;
 	}

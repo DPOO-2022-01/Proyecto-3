@@ -22,6 +22,7 @@ public class Tarea {
 			this.tipo = tipo;
 			this.actividades = new ArrayList<>();
 			this.tiempoTotal = 0;
+			this.finalizada=false;
 		}
 
 		
